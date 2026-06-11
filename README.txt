@@ -1,0 +1,785 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Especial Edicion — Apto 703</title>
+  <meta name="description" content="Uma cartinha interativa em formato de booster digital do Apto 703." />
+  <style>
+    :root {
+      --bg: #6357b5;
+      --bg-dark: #4b3f95;
+      --bg-deep: #372d76;
+      --cream: #fff6df;
+      --soft-pink: #caa2ef;
+      --cloud: #b78fe0;
+      --cloud-deep: #9e78d2;
+      --gold: #f9db7f;
+      --gold-dark: #c5933f;
+      --brown: #4b3568;
+      --shadow: 0 8px 0 rgba(55, 45, 118, .95), 0 16px 32px rgba(24, 18, 52, .35);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Trebuchet MS", "Verdana", monospace, system-ui, sans-serif;
+      color: var(--cream);
+      background-color: var(--bg);
+      background-image: url('assets/pixel-night-bg.png');
+      background-size: 440px auto;
+      background-repeat: repeat;
+      image-rendering: pixelated;
+      overflow-x: hidden;
+      text-rendering: geometricPrecision;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgba(99, 87, 181, .2), rgba(75, 63, 149, .35));
+      mix-blend-mode: multiply;
+      opacity: .75;
+    }
+
+    .screen {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 28px 18px;
+      position: relative;
+    }
+
+    .hero {
+      width: min(980px, 100%);
+      display: grid;
+      gap: 28px;
+      align-items: center;
+      grid-template-columns: 1fr;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-inline: auto;
+      padding: 10px 16px;
+      border: 4px solid var(--cream);
+      background: var(--bg-deep);
+      box-shadow: 0 4px 0 #241c50;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(44px, 10vw, 88px);
+      line-height: .92;
+      letter-spacing: -0.04em;
+      color: var(--cream);
+      text-shadow: 4px 4px 0 var(--bg-deep);
+    }
+
+    h1 .gold {
+      color: var(--gold);
+    }
+
+    .subtitle {
+      max-width: 650px;
+      margin: 0 auto;
+      color: rgba(255,246,223,.92);
+      font-size: clamp(18px, 4vw, 24px);
+      line-height: 1.45;
+      text-shadow: 2px 2px 0 rgba(55,45,118,.6);
+    }
+
+    .pack-wrap {
+      display: grid;
+      place-items: center;
+      min-height: 430px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .pack {
+      width: min(320px, 84vw);
+      aspect-ratio: 63 / 88;
+      padding: 10px;
+      background: #efd06a;
+      border: 4px solid #fff6df;
+      box-shadow: 0 0 0 4px #8b6f3f, 8px 8px 0 rgba(55,45,118,.85);
+      transform: rotate(-2deg);
+      animation: float 3.2s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: rotate(-2deg) translateY(0); }
+      50% { transform: rotate(1deg) translateY(-8px); }
+    }
+
+    .pack-inner {
+      height: 100%;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background:
+        url('assets/pixel-sky-reference.png') center/cover no-repeat,
+        linear-gradient(180deg, #6d62c3, #5b4ead);
+      border: 4px solid #2f255f;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      image-rendering: pixelated;
+    }
+
+    .pack-inner::before,
+    .pack-inner::after {
+      content: "";
+      position: absolute;
+      width: 86px;
+      height: 18px;
+      background: #fff6df;
+      opacity: .55;
+      transform: rotate(-35deg);
+      box-shadow: 18px 18px 0 rgba(255,246,223,.22);
+    }
+
+    .pack-inner::before { top: 20%; left: -6%; }
+    .pack-inner::after { bottom: 22%; right: -10%; }
+
+    .pack-title {
+      z-index: 1;
+      font-size: 34px;
+      line-height: .92;
+      font-weight: 1000;
+      color: var(--gold);
+      text-shadow: 3px 3px 0 #2a2156;
+    }
+
+    .pack-small {
+      z-index: 1;
+      margin-top: 18px;
+      border: 3px solid var(--cream);
+      padding: 8px 14px;
+      background: #4d419a;
+      color: var(--cream);
+      font-weight: 900;
+      box-shadow: 3px 3px 0 #2a2156;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    button, .fake-button {
+      appearance: none;
+      border: 3px solid var(--cream);
+      cursor: pointer;
+      padding: 14px 20px;
+      font-weight: 950;
+      font-size: 16px;
+      color: #2b2155;
+      background: var(--gold);
+      box-shadow: 0 4px 0 var(--gold-dark);
+      transition: transform .1s ease, box-shadow .1s ease, filter .15s ease;
+    }
+
+    button:hover, .fake-button:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+    }
+
+    button:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 var(--gold-dark);
+    }
+
+    .ghost {
+      color: var(--cream);
+      background: #4f439f;
+      border-color: #d8c8ff;
+      box-shadow: 0 4px 0 #372d76;
+    }
+
+    .booster {
+      display: none;
+      min-height: 100vh;
+      padding: 24px 16px 38px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .booster.active {
+      display: block;
+    }
+
+    .topbar {
+      width: min(1000px, 100%);
+      margin: 0 auto 18px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      color: rgba(255,246,223,.9);
+      font-weight: 800;
+      text-shadow: 2px 2px 0 rgba(55,45,118,.55);
+    }
+
+    .progress {
+      height: 14px;
+      flex: 1;
+      max-width: 420px;
+      background: rgba(255,255,255,.18);
+      border: 3px solid var(--cream);
+      box-shadow: 0 3px 0 #372d76;
+      overflow: hidden;
+    }
+
+    .progress span {
+      display: block;
+      height: 100%;
+      width: 0%;
+      background: repeating-linear-gradient(90deg, #ffd97c 0 14px, #ffc164 14px 28px);
+      transition: width .4s ease;
+    }
+
+    .stage {
+      width: min(1000px, 100%);
+      margin: 0 auto;
+      display: grid;
+      gap: 18px;
+      place-items: center;
+      text-align: center;
+    }
+
+    .hint {
+      margin: 0;
+      color: rgba(255,246,223,.92);
+      font-size: 15px;
+      text-shadow: 2px 2px 0 rgba(55,45,118,.55);
+    }
+
+    .card-shell {
+      width: min(390px, 88vw);
+      perspective: 1400px;
+      touch-action: manipulation;
+      position: relative;
+    }
+
+    .card-flip {
+      width: 100%;
+      aspect-ratio: 63 / 88;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform .8s cubic-bezier(.2,.8,.2,1);
+      cursor: pointer;
+    }
+
+    .card-flip.revealed {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      overflow: hidden;
+      box-shadow: 0 0 0 4px #fff6df, 0 0 0 8px #372d76, 8px 8px 0 rgba(55,45,118,.75);
+      background: rgba(0,0,0,.18);
+    }
+
+    .card-face img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      image-rendering: auto;
+    }
+
+    .card-back-pixel {
+      display: grid;
+      place-items: center;
+      background-color: #050505;
+      background-image:
+        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+        repeating-linear-gradient(45deg, #050505 0 8px, #0c0c0c 8px 16px);
+      background-size: 8px 8px, 8px 8px, 16px 16px;
+      image-rendering: pixelated;
+    }
+
+    .card-back-pixel::before {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border: 4px solid #151515;
+      box-shadow:
+        inset 0 0 0 4px #000,
+        4px 4px 0 rgba(255,255,255,.06);
+      pointer-events: none;
+    }
+
+    .card-back-pixel::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 28% 22%, rgba(255,255,255,.05) 0 2px, transparent 3px),
+        radial-gradient(circle at 72% 70%, rgba(255,255,255,.04) 0 2px, transparent 3px),
+        radial-gradient(circle at 45% 82%, rgba(255,255,255,.035) 0 2px, transparent 3px);
+      background-size: 42px 42px, 58px 58px, 66px 66px;
+      pointer-events: none;
+    }
+
+    .card-back-pixel span {
+      position: relative;
+      z-index: 1;
+      color: var(--cream);
+      font-family: "Courier New", monospace;
+      font-size: clamp(100px, 32vw, 180px);
+      font-weight: 1000;
+      line-height: 1;
+      text-shadow:
+        5px 0 0 #000,
+        0 5px 0 #000,
+        5px 5px 0 #000,
+        9px 9px 0 rgba(255,255,255,.14);
+      image-rendering: pixelated;
+    }
+
+    .front {
+      transform: rotateY(180deg);
+    }
+
+    .rare-aura {
+      display: none;
+      position: absolute;
+      inset: -14px;
+      pointer-events: none;
+      background: conic-gradient(from 0deg, rgba(249,219,127,.55), rgba(202,162,239,.55), rgba(255,246,223,.52), rgba(249,219,127,.55));
+      filter: blur(12px);
+      opacity: .75;
+      animation: spin 5s linear infinite;
+      z-index: -1;
+    }
+
+    .is-rare .rare-aura {
+      display: block;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .card-copy {
+      max-width: 720px;
+      min-height: 120px;
+      padding: 18px 18px;
+      border: 4px solid var(--cream);
+      background: rgba(79, 67, 159, .92);
+      box-shadow: 0 0 0 4px #372d76, 8px 8px 0 rgba(55,45,118,.75);
+    }
+
+    .card-copy .eyebrow {
+      display: inline-flex;
+      color: #2b2155;
+      background: var(--gold);
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 1000;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 10px;
+      border: 2px solid var(--cream);
+      box-shadow: 2px 2px 0 var(--gold-dark);
+    }
+
+    .card-copy h2 {
+      margin: 0;
+      font-size: clamp(32px, 7vw, 54px);
+      line-height: .95;
+      color: var(--cream);
+      text-shadow: 3px 3px 0 #372d76;
+    }
+
+    .card-copy p {
+      margin: 10px auto 0;
+      max-width: 620px;
+      font-size: 17px;
+      line-height: 1.45;
+      color: rgba(255,246,223,.95);
+    }
+
+    .letter {
+      display: none;
+      width: min(880px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 30px clamp(20px, 6vw, 54px);
+      color: #2d2158;
+      background: rgba(255, 246, 223, .96);
+      border: 4px solid #fff6df;
+      box-shadow: 0 0 0 4px #9e78d2, 8px 8px 0 rgba(55,45,118,.75);
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .letter::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url('assets/pixel-sky-reference.png') center/cover;
+      opacity: .08;
+      image-rendering: pixelated;
+      pointer-events: none;
+    }
+
+    .letter.active {
+      display: block;
+      animation: rise .6s ease both;
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .letter h2 {
+      position: relative;
+      color: var(--bg-dark);
+      font-size: clamp(34px, 7vw, 60px);
+      line-height: .95;
+      margin: 0 0 14px;
+      text-shadow: 2px 2px 0 rgba(202,162,239,.7);
+    }
+
+    .letter p {
+      position: relative;
+      font-size: clamp(17px, 4vw, 21px);
+      line-height: 1.58;
+      margin: 0 0 15px;
+    }
+
+    .letter .signature {
+      margin-top: 24px;
+      font-weight: 1000;
+      color: #8c3f87;
+      font-size: 22px;
+    }
+
+    .mini {
+      font-size: 13px;
+      color: rgba(255,246,223,.8);
+      max-width: 640px;
+      margin: 12px auto 0;
+      line-height: 1.4;
+      text-shadow: 2px 2px 0 rgba(55,45,118,.45);
+    }
+
+    .confetti {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 20;
+    }
+
+    .confetti i {
+      position: absolute;
+      top: -16px;
+      width: 12px;
+      height: 12px;
+      background: var(--gold);
+      opacity: .95;
+      animation: fall 2.6s linear forwards;
+      box-shadow: inset -2px -2px 0 rgba(0,0,0,.15);
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    @media (min-width: 860px) {
+      .hero {
+        grid-template-columns: 1.05fr .95fr;
+        text-align: left;
+      }
+
+      .logo {
+        margin-inline: 0;
+      }
+
+      .subtitle {
+        margin: 0;
+      }
+
+      .button-row {
+        justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .topbar {
+        font-size: 12px;
+      }
+
+      .card-copy {
+        padding: 14px;
+      }
+
+      .card-copy p {
+        font-size: 15px;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <main>
+    <section class="screen" id="intro">
+      <div class="hero">
+        <div>
+          <div class="logo">✦ Deck da Família ✦ Apto 703</div>
+          <h1><span class="gold">Especial</span><br>Edicion</h1>
+          <p class="subtitle">
+            Você recebeu um booster raro: uma coleção feita de ronrons, cafunés, teimosia,
+            rock de pai divorciado, cozinha compartilhada e um amor que virou lar.
+          </p>
+          <div class="button-row" style="margin-top: 26px;">
+            <button id="startBtn">Abrir booster</button>
+            <button class="ghost" onclick="document.getElementById('letterOnly').scrollIntoView()">Ler cartinha</button>
+          </div>
+          <p class="mini">
+            Dica: toque na carta para revelar. A carta rara aparece no final.
+          </p>
+        </div>
+
+        <div class="pack-wrap" aria-hidden="true">
+          <div class="pack">
+            <div class="pack-inner">
+              <div class="pack-title">Especial<br>Edicion</div>
+              <div class="pack-small">apto 703</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="booster" id="booster" aria-live="polite">
+      <div class="topbar">
+        <span id="counter">Carta 1 de 6</span>
+        <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+        <span>Especial Edicion</span>
+      </div>
+
+      <div class="stage">
+        <p class="hint" id="hint">Toque na carta para revelar</p>
+
+        <div class="card-shell" id="cardShell">
+          <div class="rare-aura"></div>
+          <div class="card-flip" id="cardFlip">
+            <div class="card-face back card-back-pixel" aria-label="Verso da carta">
+              <span aria-hidden="true">?</span>
+            </div>
+            <div class="card-face front">
+              <img id="cardImage" src="" alt="">
+            </div>
+          </div>
+        </div>
+
+        <div class="card-copy">
+          <span class="eyebrow" id="cardTag">Carta</span>
+          <h2 id="cardName">Nome da carta</h2>
+          <p id="cardSubtitle"></p>
+          <p id="cardMessage"></p>
+        </div>
+
+        <div class="button-row">
+          <button id="revealBtn">Revelar carta</button>
+          <button id="nextBtn" class="ghost">Próxima carta</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="letterOnly">
+      <article class="letter active">
+        <h2>Para o Caleb</h2>
+        <p>
+          Eu agradeço todos os dias por ter você na minha vida. Valeu muito a pena ter feito novena para Santo Antônio.
+        </p>
+        <p>
+          Obrigada por me apoiar, por cuidar de mim e por estar ao meu lado com tanto amor. Eu te admiro muito, admiro a pessoa que você é e a forma como você torna a minha vida mais leve, segura e feliz.
+        </p>
+        <p>
+          Eu te escolho todos os dias para viver a vida comigo, construir nossos sonhos, cuidar da nossa família e transformar cada pedacinho da nossa história em lar.
+        </p>
+        <p class="signature">Com amor, Giana 💛</p>
+      </article>
+    </section>
+  </main>
+
+  <div class="confetti" id="confetti"></div>
+
+  <script>
+    const cards = [
+      {
+            "name": "Baunilha",
+            "subtitle": "A Anciã da Casa",
+            "image": "assets/baunilha.png",
+            "tag": "Carta 001/340",
+            "message": "A guardiã mais sábia do lar, meio rabugenta, mas cheia de amor do jeitinho dela."
+      },
+      {
+            "name": "Aveia",
+            "subtitle": "A Rainha dos Ronrons",
+            "image": "assets/aveia.png",
+            "tag": "Carta 002/340",
+            "message": "O conforto em forma de ronrom. Sempre pronta para transformar qualquer cantinho em lar."
+      },
+      {
+            "name": "Flapjack",
+            "subtitle": "O Frajola Falante",
+            "image": "assets/flapjack.png",
+            "tag": "Carta 003/340",
+            "message": "O comentarista oficial do Apto 703. Tem opinião sobre tudo e presença garantida em todas as histórias."
+      },
+      {
+            "name": "Banguela",
+            "subtitle": "O Milagre de Natal",
+            "image": "assets/banguela.png",
+            "tag": "Carta 004/340",
+            "message": "Chegou de surpresa e virou peça essencial da família. Um lembrete vivo de que o amor aparece quando precisa aparecer."
+      },
+      {
+            "name": "Bento",
+            "subtitle": "O Guardião Teimoso",
+            "image": "assets/bento.png",
+            "tag": "Carta 005/340",
+            "message": "Leal, seletivo e intensamente família. Protege o lar com teimosia e muito amor."
+      },
+      {
+            "name": "Giana e Caleb",
+            "subtitle": "Amor Que Virou Lar",
+            "image": "assets/giana-e-caleb-rara.png",
+            "tag": "Carta rara encontrada",
+            "message": "A carta mais rara do deck: dois corações, uma família, muitos planos e um lar sendo construído todos os dias.",
+            "rare": true
+      }
+];
+    let index = 0;
+    let revealed = false;
+
+    const intro = document.getElementById("intro");
+    const booster = document.getElementById("booster");
+    const startBtn = document.getElementById("startBtn");
+    const cardFlip = document.getElementById("cardFlip");
+    const cardShell = document.getElementById("cardShell");
+    const cardImage = document.getElementById("cardImage");
+    const cardName = document.getElementById("cardName");
+    const cardSubtitle = document.getElementById("cardSubtitle");
+    const cardMessage = document.getElementById("cardMessage");
+    const cardTag = document.getElementById("cardTag");
+    const counter = document.getElementById("counter");
+    const progressBar = document.getElementById("progressBar");
+    const revealBtn = document.getElementById("revealBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const hint = document.getElementById("hint");
+    const confetti = document.getElementById("confetti");
+
+    function setCard(i) {
+      const card = cards[i];
+      revealed = false;
+      cardFlip.classList.remove("revealed");
+      cardShell.classList.toggle("is-rare", Boolean(card.rare));
+
+      cardImage.src = card.image;
+      cardImage.alt = "Carta " + card.name;
+      cardName.textContent = card.name;
+      cardSubtitle.textContent = card.subtitle;
+      cardMessage.textContent = card.message;
+      cardTag.textContent = card.tag;
+      counter.textContent = "Carta " + (i + 1) + " de " + cards.length;
+      progressBar.style.width = ((i) / cards.length * 100) + "%";
+      revealBtn.textContent = "Revelar carta";
+      nextBtn.textContent = i === cards.length - 1 ? "Ver cartinha final" : "Próxima carta";
+      hint.textContent = "Toque na carta para revelar";
+    }
+
+    function revealCard() {
+      if (!revealed) {
+        revealed = true;
+        cardFlip.classList.add("revealed");
+        revealBtn.textContent = "Carta revelada";
+        hint.textContent = cards[index].rare ? "Carta rara encontrada ✨" : "Carta desbloqueada";
+        progressBar.style.width = ((index + 1) / cards.length * 100) + "%";
+        if (cards[index].rare) launchConfetti();
+      }
+    }
+
+    function nextCard() {
+      if (!revealed) {
+        revealCard();
+        return;
+      }
+
+      if (index < cards.length - 1) {
+        index++;
+        setCard(index);
+      } else {
+        document.getElementById("letterOnly").scrollIntoView({ behavior: "smooth" });
+        launchConfetti();
+      }
+    }
+
+    function launchConfetti() {
+      const colors = ["#ffd65a", "#ff7acb", "#72d9ff", "#fff9e8"];
+      for (let i = 0; i < 80; i++) {
+        const piece = document.createElement("i");
+        piece.style.left = Math.random() * 100 + "vw";
+        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.animationDelay = Math.random() * .7 + "s";
+        piece.style.transform = "rotate(" + (Math.random() * 180) + "deg)";
+        confetti.appendChild(piece);
+        setTimeout(() => piece.remove(), 3300);
+      }
+    }
+
+    startBtn.addEventListener("click", () => {
+      booster.classList.add("active");
+      setCard(0);
+      booster.scrollIntoView({ behavior: "smooth" });
+    });
+
+    cardFlip.addEventListener("click", revealCard);
+    revealBtn.addEventListener("click", revealCard);
+    nextBtn.addEventListener("click", nextCard);
+
+    // Preload images for smoother reveal
+    cards.map(card => card.image).forEach(src => {
+      const img = new Image();
+      img.src = src;
+    });
+  </script>
+</body>
+</html>
